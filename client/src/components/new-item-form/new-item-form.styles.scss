@@ -1,0 +1,13 @@
+.new-item-form {
+  flex-direction: column;
+
+  input[type='file'] {
+    width: 100%;
+    padding: 5px 0px;
+  }
+
+  .react-datetime-picker {
+    padding: 20px 0px;
+    width: 100%;
+  }
+}

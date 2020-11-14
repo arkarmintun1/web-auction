@@ -1,0 +1,54 @@
+.dashboard {
+  .container {
+    padding: 0px 60px;
+    display: flex;
+    flex-direction: row;
+
+    .items {
+      padding: 20px 0px;
+
+      .bids-wrapper {
+        display: grid;
+        grid-gap: 15px;
+      }
+
+      .item-pagination {
+        padding-top: 25px;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 800px) {
+      flex-direction: column;
+
+      .items {
+        width: 100%;
+
+        .bids-wrapper {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .new-item {
+        width: 100%;
+        margin: 0px;
+      }
+    }
+
+    @media screen and (min-width: 801px) {
+      .items {
+        width: 70%;
+
+        .bids-wrapper {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      .new-item {
+        width: 30%;
+        margin-left: 20px;
+      }
+    }
+  }
+}

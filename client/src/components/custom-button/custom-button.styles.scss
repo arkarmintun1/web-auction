@@ -1,0 +1,30 @@
+@import '../../styles';
+
+.custom-button {
+  min-width: 100px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: $primary-color;
+  color: white;
+  font-size: large;
+  font-weight: bolder;
+  text-transform: uppercase;
+  outline: none;
+
+  &:disabled,
+  &[disabled] {
+    background-color: #cccccc;
+    color: #666666;
+
+    &:hover {
+      background-color: $primary-color-dark;
+    }
+  }
+
+  &:hover {
+    background-color: $primary-color-dark;
+  }
+}

@@ -1,0 +1,20 @@
+.item-detail {
+  .item-wrapper {
+    padding: 20px 60px;
+    display: flex;
+    flex-direction: row;
+
+    .left-side {
+      width: 70%;
+
+      .item-name {
+        font-weight: bold;
+        padding: 20px 0px;
+      }
+    }
+
+    .right-side {
+      width: 30%;
+    }
+  }
+}

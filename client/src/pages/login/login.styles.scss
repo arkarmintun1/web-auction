@@ -1,0 +1,18 @@
+@import '../../styles';
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+
+  .title {
+    margin: 0px;
+    color: $secondary-color;
+  }
+
+  .form {
+    width: 400px;
+  }
+}
