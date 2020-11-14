@@ -95,7 +95,11 @@ const ItemDetailPage = ({
         <div className="left-side">
           <div className="item-name">{currentItem.name}</div>
           {currentItem.imageUrl && (
-            <img src={'http://localhost:3002/' + currentItem.imageUrl} alt="" />
+            <img
+              className="item-image"
+              src={'http://localhost:3002/' + currentItem.imageUrl}
+              alt=""
+            />
           )}
           <div className="item-description">{currentItem.description}</div>
         </div>

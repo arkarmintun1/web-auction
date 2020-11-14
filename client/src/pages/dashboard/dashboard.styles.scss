@@ -10,6 +10,7 @@
       .bids-wrapper {
         display: grid;
         grid-gap: 15px;
+        grid-template-columns: 1fr 1fr;
       }
 
       .item-pagination {
@@ -24,10 +25,6 @@
 
       .items {
         width: 100%;
-
-        .bids-wrapper {
-          grid-template-columns: 1fr 1fr;
-        }
       }
 
       .new-item {
@@ -39,10 +36,6 @@
     @media screen and (min-width: 801px) {
       .items {
         width: 70%;
-
-        .bids-wrapper {
-          grid-template-columns: 1fr 1fr;
-        }
       }
 
       .new-item {
