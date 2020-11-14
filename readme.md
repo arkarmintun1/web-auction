@@ -14,6 +14,7 @@ The application inclues two modules (client and server). For local development, 
 
 - Rename `example.env` to `.env`
 - Example data are included in `server/src/seeders/items-data.json`. You can import those data into mongodb via terminal or MongoDB Compass
+  - `cd` into `seeders` folder and run `mongoimport --db=web_auction --collection=items --file=items-array.json --jsonArray`
 
 ##### Start Server
 
