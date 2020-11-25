@@ -1,0 +1,24 @@
+@import '../../styles';
+
+.user-icon {
+  color: white;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+
+  .popup {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    display: block;
+
+    .popup-button {
+      background-color: $primary-color;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      padding: 5px 10px;
+    }
+  }
+}

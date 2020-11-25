@@ -28,8 +28,12 @@
       grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
       grid-gap: 15px;
 
-      @media screen and (max-width: 800px) {
+      @media screen and (max-width: 960px) {
         grid-template-columns: 1fr 1fr;
+      }
+
+      @media screen and (max-width: 600px) {
+        grid-template-columns: 1fr;
       }
     }
 
