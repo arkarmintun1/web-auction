@@ -2,6 +2,7 @@ import { UserActionTypes } from './user.action-types';
 
 const INITIAL_STATE = {
   currentUser: null,
+  accessToken: null,
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +11,12 @@ const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         currentUser: action.payload,
+      };
+    }
+    case UserActionTypes.SET_ACCESS_TOKEN: {
+      return {
+        ...state,
+        accessToken: action.payload,
       };
     }
     default:

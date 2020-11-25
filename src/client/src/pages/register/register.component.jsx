@@ -8,24 +8,24 @@ import FormInput from '../../components/form-input/form-input.component';
 import { setCurrentUser, setAccessToken } from '../../redux/user/user.actions';
 import axios from '../../util/axios';
 
-import './login.styles.scss';
+import './register.styles.scss';
 
-const LoginPage = ({ history, setCurrentUser }) => {
+const RegisterPage = ({ history, setCurrentUser, setAccessToken }) => {
   const [alert, setAlert] = useState({
     show: false,
     title: 'Register',
     type: 'success',
     message: '',
-    isAdmin: false,
+    goToHome: false,
   });
-
   const [credentials, setCredentials] = useState({
+    username: '',
     email: '',
     password: '',
   });
 
-  const { email, password } = credentials;
-  const { show, title, message, type, isAdmin } = alert;
+  const { username, email, password } = credentials;
+  const { show, title, message, type, goToHome } = alert;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,9 +38,9 @@ const LoginPage = ({ history, setCurrentUser }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    event.preventDefault();
     try {
-      const response = await axios.post('/auth/login', {
+      const response = await axios.post('/auth/register', {
+        username,
         email,
         password,
       });
@@ -51,19 +51,19 @@ const LoginPage = ({ history, setCurrentUser }) => {
 
         handleAlert({
           show: true,
-          title: 'Login Success',
-          message: 'Logged in successfully.',
+          title: 'Register Success',
+          message: 'User account has been created successfully.',
           type: 'success',
-          isAdmin: user.role === 'admin',
+          goToHome: true,
         });
       }
     } catch (error) {
       const errorMessage = error.response.data
         ? error.response.data.error
-        : 'Error occurred while logging into your account.';
+        : 'Error occurred while creating your user account.';
       handleAlert({
         show: true,
-        title: 'Login Failed',
+        title: 'Register Failed',
         message: errorMessage,
         type: 'warning',
       });
@@ -72,17 +72,23 @@ const LoginPage = ({ history, setCurrentUser }) => {
 
   const closeAlert = () => {
     handleAlert({ show: false });
-    if (isAdmin) {
-      history.push('/dashboard');
-    } else {
+    if (goToHome) {
       history.push('/');
     }
   };
 
   return (
-    <div className="login">
+    <div className="register">
       <h1 className="title">Web Auction</h1>
       <form className="form" onSubmit={handleSubmit}>
+        <FormInput
+          type="text"
+          name="username"
+          value={username}
+          onChange={handleChange}
+          label="Username"
+          required
+        />
         <FormInput
           type="email"
           name="email"
@@ -99,9 +105,9 @@ const LoginPage = ({ history, setCurrentUser }) => {
           label="Password"
           required
         />
-        <CustomButton type="submit">Login</CustomButton>
-        <CustomButton type="button" onClick={() => history.push('/register')}>
-          Don't have an account? Register
+        <CustomButton type="submit">Register</CustomButton>
+        <CustomButton type="button" onClick={() => history.push('/login')}>
+          Already have an account? Login
         </CustomButton>
       </form>
 
@@ -123,4 +129,4 @@ const mapDispatchToProps = (dispatch) => ({
   setAccessToken: (token) => dispatch(setAccessToken(token)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(LoginPage));
+export default connect(null, mapDispatchToProps)(withRouter(RegisterPage));
