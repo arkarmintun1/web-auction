@@ -70,6 +70,7 @@ const login = async (req, res) => {
 };
 
 const me = async (req, res) => {
+  console.log(req.protocol + '://' + req.get('host'));
   const user = req.user;
   if (!user) {
     return res

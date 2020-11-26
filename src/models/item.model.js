@@ -1,20 +1,32 @@
 const mongoose = require('mongoose');
 
-const bidSchema = mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+const bidSchema = mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    created: {
+      type: Date,
+      required: true,
+    },
   },
-  amount: {
-    type: Number,
-    required: true,
-  },
-  created: {
-    type: Date,
-    required: true,
-  },
-});
+  {
+    toJSON: {
+      transform: (doc, ret) => {
+        if (!mongoose.Types.ObjectId.isValid(ret.userId)) {
+          ret.user = ret.userId;
+          delete ret.userId;
+        }
+      },
+    },
+  }
+);
 
 const itemSchema = mongoose.Schema({
   name: {
@@ -44,6 +56,14 @@ const itemSchema = mongoose.Schema({
     default: [],
   },
 });
+
+itemSchema.statics.getHighestBidder = async function (itemId) {
+  const finalItem = await this.findById(itemId).populate({
+    path: 'biddings.userId',
+    select: '-biddings',
+  });
+  return finalItem.biddings[finalItem.biddings.length - 1];
+};
 
 itemSchema.index({ name: 'text', description: 'text' });
 

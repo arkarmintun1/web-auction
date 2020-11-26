@@ -106,14 +106,27 @@ const ItemDetailPage = ({
           <div className="item-description">{currentItem.description}</div>
         </div>
         <div className="right-side">
-          <h3>Price: {currentItem.price} USD</h3>
+          <h3>Last Bid Price: {currentItem.price} USD</h3>
 
           {timeDiff === 'Bidding has done' ? (
             <div>
               <p>Bidding has been finished</p>
-              <div className="delete-button">
-                <CustomButton onClick={handleDelete}>Delete Item</CustomButton>
-              </div>
+              {currentItem.biddings && currentItem.biddings.length && (
+                <strong>
+                  Winner:{' '}
+                  {
+                    currentItem.biddings[currentItem.biddings.length - 1].user
+                      .username
+                  }
+                </strong>
+              )}
+              {currentUser.role === 'admin' && (
+                <div className="delete-button">
+                  <CustomButton onClick={handleDelete}>
+                    Delete Item
+                  </CustomButton>
+                </div>
+              )}
             </div>
           ) : (
             <div>
@@ -149,9 +162,9 @@ const ItemDetailPage = ({
 
           <h4>Biddings</h4>
           {currentItem.biddings && currentItem.biddings.length ? (
-            currentItem.biddings.map((bidding) => (
+            currentItem.biddings.map((bidding, index) => (
               <p key={bidding.created}>
-                {bidding.userId.username} - {bidding.amount}USD
+                {bidding.user.username} - {bidding.amount} USD
               </p>
             ))
           ) : (

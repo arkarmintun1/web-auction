@@ -1,28 +1,47 @@
 const mongoose = require('mongoose');
 
-const bidSchema = new mongoose.Schema({
-  itemId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Item',
-    requied: true,
+const bidSchema = new mongoose.Schema(
+  {
+    itemId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Item',
+      requied: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: 'String',
+      enum: ['Won', 'In Progress', 'Lost'],
+      default: 'In Progress',
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    invoice: {
+      type: String,
+    },
+    created: {
+      type: Date,
+      default: Date.now,
+    },
+    updated: {
+      type: Date,
+    },
   },
-  status: {
-    type: 'String',
-    enum: ['Won', 'In Progress', 'Lost'],
-    default: 'In Progress',
-  },
-  amount: {
-    type: Number,
-    required: true,
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  updated: {
-    type: Date,
-  },
-});
+  {
+    toJSON: {
+      transform: (doc, ret) => {
+        if (!mongoose.Types.ObjectId.isValid(ret.itemId)) {
+          ret.item = ret.itemId;
+          delete ret.itemId;
+        }
+      },
+    },
+  }
+);
 
 const userSchema = new mongoose.Schema(
   {

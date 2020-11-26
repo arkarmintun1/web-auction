@@ -38,18 +38,23 @@ const BidItem = ({
 
   return (
     <div className="item">
-      <img
-        className="item-image"
-        src={'http://localhost:3002/' + imgUrl}
-        alt=""
-      />
-      <div className="item-name">
-        {name}, <strong>Price: {price} USD</strong>
+      <div className="item-top">
+        <img
+          className="item-image"
+          src={'http://localhost:3002' + imgUrl}
+          alt=""
+        />
+        <div className="item-name">{name}</div>
+        <div className="item-price">
+          <strong>Price: {price} USD</strong>
+        </div>
       </div>
-      <div className="item-time-remaining">Time reamining: {timeDiff}</div>
-      <CustomButton onClick={handleClick}>
-        {isAdmin ? 'View Detail' : 'Bid Now'}
-      </CustomButton>
+      <div className="item-bottom">
+        <div className="item-time-remaining">Time reamining: {timeDiff}</div>
+        <CustomButton onClick={handleClick}>
+          {isAdmin ? 'View Detail' : 'Bid Now'}
+        </CustomButton>
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@ const Item = require('../models/item.model');
 const User = require('../models/user.model');
 const socket = require('../server');
 const mailSender = require('../utils/mail-sender');
+const { generateInvoice } = require('../utils/invoice');
 
 const index = async (req, res) => {
   try {
@@ -40,15 +41,50 @@ const create = async (req, res) => {
       biddingCloseAt,
     });
     const notifyOn = new Date(biddingCloseAt);
-    schedule.scheduleJob(item._id.toString(), notifyOn, async () => {
-      const info = await mailSender.sendMail({
-        from: 'arkarmintun1@gmail.com',
-        to: '2b1a84444b-36156a@inbox.mailtrap.io, arkarmintun1@gmail.com',
-        subject: 'Auction Result',
-        text: 'You have won the auction',
-      });
 
-      console.log('Message sent: %s', info.messageId);
+    // Send winning message to the highest bidder when bidding close
+    schedule.scheduleJob(item._id.toString(), notifyOn, async () => {
+      const highestBidder = await Item.getHighestBidder(item._id);
+      if (highestBidder) {
+        const toEmail = highestBidder.userId.email;
+
+        // Generate Invoice
+        const invoicePath = await generateInvoice({
+          username: highestBidder.userId.username,
+          email: highestBidder.userId.email,
+          item: { _id: item._id, name: name, price: highestBidder.amount },
+        });
+
+        const biddingItem = await Item.findById(item._id);
+        biddingItem.biddings.forEach(async (bidding) => {
+          const user = await User.findById(bidding.userId);
+          if (user._id.toString() === highestBidder.userId._id.toString()) {
+            user.biddings.forEach((userBidding) => {
+              if (userBidding.itemId.toString() === item._id.toString()) {
+                userBidding.invoice = invoicePath;
+                userBidding.status = 'Won';
+              }
+            });
+            await user.save();
+          } else {
+            user.biddings.forEach((userBidding) => {
+              if (userBidding.itemId.toString() === item._id.toString()) {
+                userBidding.status = 'Lost';
+              }
+            });
+            await user.save();
+          }
+        });
+
+        const info = await mailSender.sendMail({
+          from: 'arkarmintun1@gmail.com',
+          to: `arkarmintun1@gmail.com, ${toEmail}`,
+          subject: 'Auction Result [Awarded]',
+          html: `<h3>Dear ${highestBidder.userId.username},</h3><br/><p>Congratulations.</p><p>You have won the auction for the <strong>${name}</strong> with the price of <b>${highestBidder.amount} USD</b>. Please contact the web auction operation team for futher steps.</p>`,
+        });
+
+        console.log('Message sent: %s', info.messageId);
+      }
     });
     res.json(item);
   } catch (error) {
@@ -135,6 +171,7 @@ const bid = async (req, res) => {
     } else {
       user.biddings.push({
         itemId: itemId,
+        name: item.name,
         amount: amount,
         updated: Date.now(),
       });

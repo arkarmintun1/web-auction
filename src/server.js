@@ -10,6 +10,7 @@ const db = require('./db');
 
 const itemRoutes = require('./routes/item.routes');
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 
 db.loadDatabse();
 
@@ -23,7 +24,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 const server = http.createServer(app);
@@ -43,11 +44,13 @@ io.on('connection', (socket) => {
   });
 });
 
+// Export socket to use in controllers
 const socketIoObject = io;
 module.exports.ioObject = socketIoObject;
 
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/user', userRoutes);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));

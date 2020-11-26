@@ -11,19 +11,21 @@
     position: absolute;
     right: 0;
     top: 30px;
-    width: 100px;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
     padding: 5px;
     background-color: $primary-color;
+    box-shadow: 0px 0px 5px -1px #4b4b4b;
 
     .popup-button {
       background-color: $primary-color;
       color: white;
       border-radius: 5px;
       border: none;
-      padding: 5px 10px;
+      padding: 10px 50px;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: bold;
 
       &:not(:first-child) {
         margin-top: 5px;
