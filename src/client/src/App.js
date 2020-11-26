@@ -16,6 +16,7 @@ import RegisterPage from './pages/register/register.component';
 import HomePage from './pages/homepage/homepage.component';
 import DashboardPage from './pages/dashboard/dashboard.component';
 import ItemDetailPage from './pages/item-detail/item-detail.component';
+import ProfilePage from './pages/profile/profile.component';
 
 const App = ({
   currentUser,
@@ -72,6 +73,17 @@ const App = ({
     return currentUser ? <Redirect to="/" /> : <LoginPage />;
   };
 
+  /**
+   * If current user exists, display profile page
+   * If not, redirect to home page.
+   */
+  const handleProfileRoute = () => {
+    return currentUser ? <ProfilePage /> : <Redirect to="/" />;
+  };
+
+  /**
+   * Socket is connected with the server for bid realtime updates
+   */
   useEffect(() => {
     socket.emit('initial_data');
     socket.on('get_data', (data) => {
@@ -102,6 +114,7 @@ const App = ({
         <Route path="/register" render={handleRegisterRoute} />
         <Route path="/login" render={handleLoginRoute} />
         <Route path="/dashboard" render={handleDashbordRoute} />
+        <Route path="/profile" render={handleProfileRoute} />
         <Route path="/items/:itemId" render={handleItemDetail} />
       </Switch>
     </div>

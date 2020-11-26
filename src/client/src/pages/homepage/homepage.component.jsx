@@ -75,7 +75,7 @@ const HomePage = ({
 
   return (
     <div className="home">
-      <Header>Header</Header>
+      <Header showSearch={true} />
       <div className="container">
         <div className="home-title">
           <h2>Bidding Items</h2>

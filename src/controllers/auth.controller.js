@@ -27,6 +27,9 @@ const register = async (req, res) => {
 
     const token = jwt.sign({ id: user._id }, config.jwtSecret);
 
+    // Remove some fields
+    user.biddings = undefined;
+
     return res.json({ token, user });
   } catch (error) {
     console.log(error);
@@ -53,6 +56,9 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, config.jwtSecret);
+
+    // Remove some fields
+    user.biddings = undefined;
 
     return res.json({ token, user });
   } catch (error) {

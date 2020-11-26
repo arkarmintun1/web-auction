@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
+const http = require('http');
+const socketIO = require('socket.io');
 
 const config = require('./config');
 const db = require('./db');
@@ -24,6 +26,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(path.join(__dirname, 'client', 'build')));
 
+const server = http.createServer(app);
+const io = socketIO(server);
+
+io.on('connection', (socket) => {
+  console.log('new client connected: ', socket.id);
+
+  // Test initial data
+  socket.on('initial_data', () => {
+    io.sockets.emit('get_data', 'hello_world');
+  });
+
+  // user disconnected
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+const socketIoObject = io;
+module.exports.ioObject = socketIoObject;
+
 app.use('/api/items', itemRoutes);
 app.use('/api/auth', authRoutes);
 
@@ -31,6 +53,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
-app.listen(config.port, () => {
+server.listen(config.port, () => {
   console.log(`Server running on port: ${config.port}`);
 });

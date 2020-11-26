@@ -67,7 +67,7 @@ const DashboardPage = ({
 
   return (
     <div className="dashboard">
-      <Header />
+      <Header showSearch={true} />
       <div className="container">
         <div className="items">
           <div className="bids-wrapper">

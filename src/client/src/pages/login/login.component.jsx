@@ -10,7 +10,7 @@ import axios from '../../util/axios';
 
 import './login.styles.scss';
 
-const LoginPage = ({ history, setCurrentUser }) => {
+const LoginPage = ({ history, setCurrentUser, setAccessToken }) => {
   const [alert, setAlert] = useState({
     show: false,
     title: 'Register',

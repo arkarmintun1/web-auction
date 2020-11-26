@@ -1,5 +1,21 @@
 const mongoose = require('mongoose');
 
+const bidSchema = mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  created: {
+    type: Date,
+    required: true,
+  },
+});
+
 const itemSchema = mongoose.Schema({
   name: {
     type: String,
@@ -24,22 +40,7 @@ const itemSchema = mongoose.Schema({
     default: 0,
   },
   biddings: {
-    type: [
-      {
-        email: {
-          type: String,
-          required: true,
-        },
-        amount: {
-          type: Number,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          required: true,
-        },
-      },
-    ],
+    type: [bidSchema],
     default: [],
   },
 });

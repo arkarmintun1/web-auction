@@ -23,7 +23,6 @@ const ItemDetailPage = ({
   setSearchQuery,
 }) => {
   const { itemId } = useParams();
-  // const [currentItem, setCurrentItem] = useState({});
   const [timeDiff, setTimeDiff] = useState('');
   const [biddingAmount, setBiddingAmount] = useState(0);
 
@@ -58,7 +57,7 @@ const ItemDetailPage = ({
   const handleBid = async () => {
     if (currentItem.biddings && currentItem.biddings.length) {
       const latestBid = currentItem.biddings[currentItem.biddings.length - 1];
-      if (latestBid.email === currentUser.email) {
+      if (latestBid.userId === currentUser.id) {
         alert('You already placed the last bid');
         return;
       } else if (latestBid.amount >= biddingAmount) {
@@ -66,14 +65,17 @@ const ItemDetailPage = ({
         return;
       }
     }
-    const response = await axios.post(`/items/${itemId}/biddings`, {
-      email: currentUser.email,
-      amount: biddingAmount,
-    });
-    if (response.status === 200) {
-      setCurrentItem(response.data);
-      alert('Bidding has been placed successfully');
-    } else {
+    try {
+      const response = await axios.post(`/items/${itemId}/biddings`, {
+        userId: currentUser.id,
+        amount: biddingAmount,
+      });
+      if (response.status === 200) {
+        setCurrentItem(response.data);
+        alert('Bidding has been placed successfully');
+      }
+    } catch (error) {
+      console.log(error.response);
       alert('Error occurred while placing bid');
     }
   };
@@ -107,10 +109,15 @@ const ItemDetailPage = ({
           <h3>Price: {currentItem.price} USD</h3>
 
           {timeDiff === 'Bidding has done' ? (
-            <p>Bidding has been finished</p>
+            <div>
+              <p>Bidding has been finished</p>
+              <div className="delete-button">
+                <CustomButton onClick={handleDelete}>Delete Item</CustomButton>
+              </div>
+            </div>
           ) : (
             <div>
-              {currentUser.email === 'admin@gmail.com' ? (
+              {currentUser.role === 'admin' ? (
                 <div>
                   <p>Time Remaining: {timeDiff}</p>
                   <div className="delete-button">
@@ -118,7 +125,7 @@ const ItemDetailPage = ({
                       Delete Item
                     </CustomButton>
                   </div>
-                  <UpdateItemForm item={currentItem} />
+                  <UpdateItemForm />
                 </div>
               ) : (
                 <div>
@@ -143,8 +150,8 @@ const ItemDetailPage = ({
           <h4>Biddings</h4>
           {currentItem.biddings && currentItem.biddings.length ? (
             currentItem.biddings.map((bidding) => (
-              <p key={bidding.createdAt}>
-                {bidding.email} - {bidding.amount}USD
+              <p key={bidding.created}>
+                {bidding.userId.username} - {bidding.amount}USD
               </p>
             ))
           ) : (

@@ -12,7 +12,7 @@ import CustomButton from '../custom-button/custom-button.component';
 
 import './update-item-form.styles.scss';
 
-const UpdateItemForm = ({ item, setSearchQuery, setCurrentItem }) => {
+const UpdateItemForm = ({ currentItem, setSearchQuery, setCurrentItem }) => {
   const [itemId, setItemId] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -20,11 +20,13 @@ const UpdateItemForm = ({ item, setSearchQuery, setCurrentItem }) => {
   const [biddingCloseAt, setBiddingCloseAt] = useState(new Date());
 
   useEffect(() => {
-    setItemId(item._id);
-    setName(item.name);
-    setDescription(item.description);
-    setBiddingCloseAt(item.biddingCloseAt);
-  }, [item]);
+    setItemId(currentItem._id);
+    setName(currentItem.name);
+    setDescription(currentItem.description);
+    if (currentItem.biddingCloseAt) {
+      setBiddingCloseAt(new Date(currentItem.biddingCloseAt ?? ''));
+    }
+  }, [currentItem]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -91,7 +93,7 @@ const UpdateItemForm = ({ item, setSearchQuery, setCurrentItem }) => {
   );
 };
 const mapStateToProps = createStructuredSelector({
-  item: selectCurrentItem,
+  currentItem: selectCurrentItem,
 });
 
 const mapDispatchToProps = (dispatch) => ({

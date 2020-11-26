@@ -1,5 +1,29 @@
 const mongoose = require('mongoose');
 
+const bidSchema = new mongoose.Schema({
+  itemId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Item',
+    requied: true,
+  },
+  status: {
+    type: 'String',
+    enum: ['Won', 'In Progress', 'Lost'],
+    default: 'In Progress',
+  },
+  amount: {
+    type: Number,
+    required: true,
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  updated: {
+    type: Date,
+  },
+});
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -23,6 +47,10 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin'],
       default: 'user',
     },
+    biddings: {
+      type: [bidSchema],
+      default: [],
+    },
     created: {
       type: Date,
       default: Date.now,
@@ -37,6 +65,7 @@ const userSchema = new mongoose.Schema(
         ret.id = ret._id;
         delete ret._id;
         delete ret.password;
+        delete ret.__v;
       },
     },
   }

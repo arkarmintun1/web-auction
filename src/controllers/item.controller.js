@@ -1,8 +1,9 @@
-const multer = require('multer');
-const { parse } = require('path');
-const path = require('path');
+const schedule = require('node-schedule');
 
 const Item = require('../models/item.model');
+const User = require('../models/user.model');
+const socket = require('../server');
+const mailSender = require('../utils/mail-sender');
 
 const index = async (req, res) => {
   try {
@@ -38,6 +39,17 @@ const create = async (req, res) => {
       imageUrl,
       biddingCloseAt,
     });
+    const notifyOn = new Date(biddingCloseAt);
+    schedule.scheduleJob(item._id.toString(), notifyOn, async () => {
+      const info = await mailSender.sendMail({
+        from: 'arkarmintun1@gmail.com',
+        to: '2b1a84444b-36156a@inbox.mailtrap.io, arkarmintun1@gmail.com',
+        subject: 'Auction Result',
+        text: 'You have won the auction',
+      });
+
+      console.log('Message sent: %s', info.messageId);
+    });
     res.json(item);
   } catch (error) {
     console.log(error);
@@ -48,7 +60,10 @@ const create = async (req, res) => {
 const read = async (req, res) => {
   try {
     const itemId = req.params.itemId;
-    const item = await Item.findById(itemId);
+    const item = await Item.findById(itemId).populate({
+      path: 'biddings.userId',
+      select: 'username',
+    });
     if (!item) {
       return res.status(400).json({ error: 'Item does not exists' });
     }
@@ -99,13 +114,40 @@ const remove = async (req, res) => {
 
 const bid = async (req, res) => {
   try {
-    const { email, amount } = req.body;
+    const { userId, amount } = req.body;
     const itemId = req.params.itemId;
     const item = await Item.findById(itemId);
     item.price = amount;
-    item.biddings.push({ email, amount, createdAt: Date.now() });
+    item.biddings.push({ userId, amount, created: Date.now() });
     await item.save();
-    res.json(item);
+
+    const user = await User.findById(userId);
+    const biddingExists = user.biddings.some(
+      (bidding) => bidding.itemId.toString() === itemId
+    );
+    if (biddingExists) {
+      user.biddings.forEach((bidding) => {
+        if (bidding.itemId.toString() === itemId) {
+          bidding.amount = amount;
+          bidding.updated = Date.now();
+        }
+      });
+    } else {
+      user.biddings.push({
+        itemId: itemId,
+        amount: amount,
+        updated: Date.now(),
+      });
+    }
+    await user.save();
+
+    const updatedItem = await Item.findById(itemId).populate({
+      path: 'biddings.userId',
+      select: 'username',
+    });
+
+    socket.ioObject.sockets.emit('bid_placed', updatedItem);
+    res.json(updatedItem);
   } catch (error) {
     console.log(error);
     res.status(400).json({ error: 'Error occurred' });
