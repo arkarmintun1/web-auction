@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -21,6 +21,7 @@ const ItemDetailPage = ({
   currentItem,
   setCurrentItem,
   setSearchQuery,
+  history,
 }) => {
   const { itemId } = useParams();
   const [timeDiff, setTimeDiff] = useState('');
@@ -57,7 +58,7 @@ const ItemDetailPage = ({
   const handleBid = async () => {
     if (currentItem.biddings && currentItem.biddings.length) {
       const latestBid = currentItem.biddings[currentItem.biddings.length - 1];
-      if (latestBid.userId === currentUser.id) {
+      if (latestBid.user.id === currentUser.id) {
         alert('You already placed the last bid');
         return;
       } else if (latestBid.amount >= biddingAmount) {
@@ -85,6 +86,7 @@ const ItemDetailPage = ({
     if (response.status === 200) {
       alert('Item Successfully Deleted');
       setSearchQuery('');
+      history.goBack();
     } else {
       alert('Error occurred while deleting item');
     }
@@ -186,4 +188,7 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrentItem: (item) => dispatch(setCurrentItem(item)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ItemDetailPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(ItemDetailPage));

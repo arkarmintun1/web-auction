@@ -20,14 +20,25 @@ const UserIcon = ({ history, currentUser, setCurrentUser, setAccessToken }) => {
     history.push('/profile');
   };
 
+  const handleDashboard = () => {
+    history.push('/dashboard');
+  };
+
   return (
     <div className="user-icon" onClick={() => setShowPopup(!showPopup)}>
       {currentUser.username}
       {showPopup && (
         <div className="popup">
-          <button className="popup-button" onClick={handleProfile}>
-            Profile
-          </button>
+          {currentUser && currentUser.role === 'admin' ? (
+            <button className="popup-button" onClick={handleDashboard}>
+              Dashboard
+            </button>
+          ) : (
+            <button className="popup-button" onClick={handleProfile}>
+              Profile
+            </button>
+          )}
+
           <button className="popup-button" onClick={handleLogout}>
             Logout
           </button>

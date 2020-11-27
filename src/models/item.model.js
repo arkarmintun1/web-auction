@@ -65,6 +65,10 @@ itemSchema.statics.getHighestBidder = async function (itemId) {
   return finalItem.biddings[finalItem.biddings.length - 1];
 };
 
+itemSchema.post('save', function () {
+  console.log('New Item has been created');
+});
+
 itemSchema.index({ name: 'text', description: 'text' });
 
 module.exports = mongoose.model('Item', itemSchema);
