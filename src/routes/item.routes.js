@@ -41,8 +41,10 @@ router.put('/:itemId', upload.single('image'), itemController.update);
 // Delete
 router.delete('/:itemId', itemController.remove);
 
+// add bidding
 router.post('/:itemId/biddings', itemController.bid);
 
+// auto bidding setting on/off
 router.get(
   '/:itemId/toggleAutoBidder',
   itemValidator.toggleAutoBidder,
@@ -50,7 +52,5 @@ router.get(
   isAuthenticated,
   itemController.toggleAutoBidder
 );
-
-router.get('/test', itemController.test);
 
 module.exports = router;

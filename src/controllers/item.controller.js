@@ -237,7 +237,7 @@ const bid = async (req, res) => {
       }
     });*/
 
-    // await checkAutoBidder(itemId, userId);
+    await checkAutoBidder(itemId);
 
     // Return updated item
     res.json(updatedItem);
@@ -274,6 +274,8 @@ const toggleAutoBidder = async (req, res) => {
     }
     await item.save();
 
+    await checkAutoBidder(itemId);
+
     // Trigger an event that there's a new bidding
     socket.ioObject.sockets.emit('bid_placed', item);
     res.json({ success: 'successfully added' });
@@ -284,20 +286,110 @@ const toggleAutoBidder = async (req, res) => {
   }
 };
 
-const test = async (req, res) => {
-  const { itemId, userId } = req.body;
-  await checkAutoBidder(itemId, userId);
-  res.send('Test Done');
-};
-
-const checkAutoBidder = async (itemId, userId) => {
+const checkAutoBidder = async (itemId) => {
   try {
-    const item = await Item.findById(itemId);
-    const highestBidder = await Item.getHighestBidder(itemId);
-    console.log(highestBidder);
+    const originalItem = await Item.findById(itemId);
+    const autoBidders = originalItem.autoBidders;
+    console.log(autoBidders);
+
+    if (autoBidders.length) {
+      console.log('auto bidders exist.');
+      originalItem.autoBidders.forEach(async (autoBidderId) => {
+        console.log(autoBidderId);
+
+        const item = await Item.findById(itemId);
+
+        const highestBidding = await Item.getHighestBidder(itemId);
+        console.log('HIGHEST BIDDING: ', highestBidding);
+
+        if (
+          !highestBidding ||
+          highestBidding.userId._id.toString() != autoBidderId.toString()
+        ) {
+          const availableBiddingAmount = await User.getAutoBidAmountByUserId(
+            autoBidderId
+          );
+          console.log('AMOUNT: ', availableBiddingAmount);
+          if (availableBiddingAmount > 0) {
+            await placeBidding(autoBidderId, itemId, item.price + 1);
+            await User.reduceAutoBidAmountByUserId(autoBidderId);
+            console.log('ADD NEW BIDDING');
+            await checkAutoBidder(itemId);
+          }
+        }
+      });
+    } else {
+      console.log('auto bidders does not exist.');
+    }
   } catch (error) {
     console.log(error);
   }
+};
+
+const placeBidding = async (userId, itemId, amount) => {
+  const item = await Item.findById(itemId);
+  item.price = amount;
+  item.biddings.push({ userId, amount, created: Date.now() });
+  await item.save();
+
+  // Add bidding to the user account
+  const user = await User.findById(userId);
+  const biddingExists = user.biddings.some(
+    (bidding) => bidding.itemId.toString() === itemId
+  );
+  if (biddingExists) {
+    user.biddings.forEach((bidding) => {
+      if (bidding.itemId.toString() === itemId) {
+        bidding.amount = amount;
+        bidding.updated = Date.now();
+      }
+    });
+  } else {
+    user.biddings.push({
+      itemId: itemId,
+      name: item.name,
+      amount: amount,
+      updated: Date.now(),
+    });
+  }
+  await user.save();
+
+  // Get updated item with biddings to return
+  const updatedItem = await Item.findById(itemId).populate({
+    path: 'biddings.userId',
+    select: 'username email',
+  });
+
+  // Trigger an event that there's a new bidding
+  socket.ioObject.sockets.emit('bid_placed', updatedItem);
+
+  /*
+  // Send email to all user that there's an updated bid
+  const emails = updatedItem.biddings.map((bidding) => {
+    return bidding.userId.email;
+  });
+  const uniqueEmails = emails.filter(
+    (email, index) => emails.indexOf(email) === index
+  );
+  uniqueEmails.forEach(async (email) => {
+    if (email != user.email) {
+      const info = await mailSender.sendMail({
+        from: 'arkarmintun1@gmail.com',
+        to: [
+          'arkarmintun1@gmail.com',
+          email,
+          '2b1a84444b-7b295c@inbox.mailtrap.io',
+        ],
+        subject: 'New Bidding on your Item',
+        text:
+          'Other users are also bidding the same item as you. Please hurry to out-bit them.',
+      });
+
+      console.log('Message sent: %s', info);
+    }
+  });*/
+
+  // await checkAutoBidder(itemId);
 };
 
 module.exports = {
@@ -307,6 +399,5 @@ module.exports = {
   update,
   remove,
   bid,
-  test,
   toggleAutoBidder,
 };

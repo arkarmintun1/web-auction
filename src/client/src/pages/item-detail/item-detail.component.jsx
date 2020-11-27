@@ -179,15 +179,18 @@ const ItemDetailPage = ({
           )}
 
           <h4>Biddings</h4>
-          {currentItem.biddings && currentItem.biddings.length ? (
-            currentItem.biddings.map((bidding, index) => (
-              <p key={bidding.created}>
-                {bidding.user.username} - {bidding.amount} USD
-              </p>
-            ))
-          ) : (
-            <p>No bidding has been placed</p>
-          )}
+          <div className="biddings-container">
+            {currentItem.biddings && currentItem.biddings.length ? (
+              currentItem.biddings.map((bidding, index, array) => (
+                <p key={index}>
+                  {array[array.length - 1 - index].user.username} -{' '}
+                  {array[array.length - 1 - index].amount} USD
+                </p>
+              ))
+            ) : (
+              <p>No bidding has been placed</p>
+            )}
+          </div>
         </div>
       </div>
     </div>

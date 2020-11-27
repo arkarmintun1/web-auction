@@ -98,4 +98,15 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+userSchema.statics.getAutoBidAmountByUserId = async function (userId) {
+  const user = await this.findById(userId);
+  return user.autoBidAmount;
+};
+
+userSchema.statics.reduceAutoBidAmountByUserId = async function (userId) {
+  const user = await this.findById(userId);
+  user.autoBidAmount = user.autoBidAmount - 1;
+  await user.save();
+};
+
 module.exports = mongoose.model('User', userSchema);

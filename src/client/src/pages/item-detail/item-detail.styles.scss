@@ -20,6 +20,11 @@
 
     .right-side {
       width: 35%;
+
+      .biddings-container {
+        height: 500px;
+        overflow-y: scroll;
+      }
     }
 
     @media screen and (max-width: 800px) {

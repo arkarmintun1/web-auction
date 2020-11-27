@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SweetAlert from 'react-bootstrap-sweetalert';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -29,8 +29,13 @@ const BidSettings = ({ currentUser, accessToken, setCurrentUser }) => {
     setAlertDialog({ ...alertDialog, ...props });
   };
 
-  const [amount, setAmount] = useState(currentUser.autoBidAmount);
-  const [alert, setAlert] = useState(currentUser.autoBidAlert);
+  const [amount, setAmount] = useState(0);
+  const [alert, setAlert] = useState(0);
+
+  useEffect(() => {
+    setAmount(currentUser.autoBidAmount);
+    setAlert(currentUser.autoBidAlert);
+  }, [currentUser]);
 
   const submitUpdateSettings = async (event) => {
     event.preventDefault();
@@ -91,12 +96,12 @@ const BidSettings = ({ currentUser, accessToken, setCurrentUser }) => {
             />
             <FormInput
               type="text"
-              name="Amount"
+              name="Alert"
               value={alert}
               onChange={(e) => {
                 setAlert(e.target.value);
               }}
-              label="Amount"
+              label="Alert"
               required
             />
 
