@@ -70,6 +70,14 @@ const userSchema = new mongoose.Schema(
       type: [bidSchema],
       default: [],
     },
+    autoBidAmount: {
+      type: Number,
+      default: 500,
+    },
+    autoBidAlert: {
+      type: Number,
+      default: 90,
+    },
     created: {
       type: Date,
       default: Date.now,

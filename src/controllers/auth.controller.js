@@ -78,6 +78,9 @@ const me = async (req, res) => {
       .json({ error: 'User does not exist' });
   }
 
+  // remove biddings since its not related
+  user.biddings = undefined;
+
   return res.json({ user });
 };
 

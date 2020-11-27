@@ -38,7 +38,6 @@ const LoginPage = ({ history, setCurrentUser, setAccessToken }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    event.preventDefault();
     try {
       const response = await axios.post('/auth/login', {
         email,

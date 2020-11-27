@@ -11,6 +11,7 @@ import axios from '../../util/axios';
 import Header from '../../components/header/header.component';
 
 import './profile.styles.scss';
+import BidSettings from '../../components/bid-settings/bid-settings.component';
 
 const ProfilePage = ({ currentuser, accessToken }) => {
   const [biddings, setBiddings] = useState([]);
@@ -35,6 +36,7 @@ const ProfilePage = ({ currentuser, accessToken }) => {
     <div className="profile">
       <Header />
       <div className="container">
+        <BidSettings />
         <h3 className="bid-title">Bids</h3>
         <div className="bids-container">
           <table className="bids-table">

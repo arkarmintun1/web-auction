@@ -15,4 +15,12 @@ router.get(
   userController.getUserBiddings
 );
 
+router.post(
+  '/updateAutoBidSettings',
+  userValidator.updateAutoBidSettings,
+  validatorHandler,
+  isAuthenticated,
+  userController.updateAutoBidSettings
+);
+
 module.exports = router;

@@ -55,6 +55,10 @@ const itemSchema = mongoose.Schema({
     type: [bidSchema],
     default: [],
   },
+  autoBidders: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'User',
+  },
 });
 
 itemSchema.statics.getHighestBidder = async function (itemId) {
@@ -66,7 +70,7 @@ itemSchema.statics.getHighestBidder = async function (itemId) {
 };
 
 itemSchema.post('save', function () {
-  console.log('New Item has been created');
+  console.log('Item has been saved');
 });
 
 itemSchema.index({ name: 'text', description: 'text' });
