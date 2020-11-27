@@ -5,6 +5,7 @@ const User = require('../models/user.model');
 const socket = require('../server');
 const mailSender = require('../utils/mail-sender');
 const { generateInvoice } = require('../utils/invoice');
+const httpStatus = require('../utils/http-status');
 
 const index = async (req, res) => {
   try {
@@ -210,6 +211,7 @@ const bid = async (req, res) => {
     // Trigger an event that there's a new bidding
     socket.ioObject.sockets.emit('bid_placed', updatedItem);
 
+    /*
     // Send email to all user that there's an updated bid
     const emails = updatedItem.biddings.map((bidding) => {
       return bidding.userId.email;
@@ -233,7 +235,9 @@ const bid = async (req, res) => {
 
         console.log('Message sent: %s', info);
       }
-    });
+    });*/
+
+    // await checkAutoBidder(itemId, userId);
 
     // Return updated item
     res.json(updatedItem);
@@ -243,4 +247,66 @@ const bid = async (req, res) => {
   }
 };
 
-module.exports = { index, create, read, update, remove, bid };
+const toggleAutoBidder = async (req, res) => {
+  try {
+    const user = req.user;
+    if (!user) {
+      return res
+        .status(httpStatus.ClientError.NotFound)
+        .json({ error: 'User does not exist' });
+    }
+    const itemId = req.params.itemId;
+    const item = await Item.findById(itemId).populate({
+      path: 'biddings.userId',
+      select: 'username email',
+    });
+
+    const existingAutoBidderIndex = item.autoBidders.findIndex(
+      (autoBidderId) => {
+        return autoBidderId.toString() === user._id.toString();
+      }
+    );
+
+    if (existingAutoBidderIndex < 0) {
+      item.autoBidders.push(user._id);
+    } else {
+      item.autoBidders.splice(existingAutoBidderIndex, 1);
+    }
+    await item.save();
+
+    // Trigger an event that there's a new bidding
+    socket.ioObject.sockets.emit('bid_placed', item);
+    res.json({ success: 'successfully added' });
+  } catch (error) {
+    res
+      .status(httpStatus.ClientError.BadRequest)
+      .json({ error: 'Error occurred' });
+  }
+};
+
+const test = async (req, res) => {
+  const { itemId, userId } = req.body;
+  await checkAutoBidder(itemId, userId);
+  res.send('Test Done');
+};
+
+const checkAutoBidder = async (itemId, userId) => {
+  try {
+    const item = await Item.findById(itemId);
+    const highestBidder = await Item.getHighestBidder(itemId);
+    console.log(highestBidder);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  index,
+  create,
+  read,
+  update,
+  remove,
+  bid,
+  test,
+  toggleAutoBidder,
+};

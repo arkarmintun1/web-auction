@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import axios from '../../util/axios';
-import { selectCurrentUser } from '../../redux/user/user.selector';
+import {
+  selectCurrentUser,
+  selectAccessToken,
+} from '../../redux/user/user.selector';
 import { setSearchQuery } from '../../redux/search/search.actions';
 import { setCurrentItem } from '../../redux/items/items.actions';
 
@@ -15,17 +18,19 @@ import './item-detail.styles.scss';
 import FormInput from '../../components/form-input/form-input.component';
 import UpdateItemForm from '../../components/update-item-form/update-item-form.component';
 import { selectCurrentItem } from '../../redux/items/items.selector';
+import AutoBidding from '../../components/auto-bidding/auto-bidding.component';
 
 const ItemDetailPage = ({
   currentUser,
   currentItem,
+  accessToken,
   setCurrentItem,
   setSearchQuery,
   history,
 }) => {
   const { itemId } = useParams();
   const [timeDiff, setTimeDiff] = useState('');
-  const [biddingAmount, setBiddingAmount] = useState(0);
+  const [biddingAmount, setBiddingAmount] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -56,6 +61,10 @@ const ItemDetailPage = ({
   }, [itemId, setCurrentItem]);
 
   const handleBid = async () => {
+    if (!biddingAmount || biddingAmount === '') {
+      alert('The bidding amount cannot be empty');
+      return;
+    }
     if (currentItem.biddings && currentItem.biddings.length) {
       const latestBid = currentItem.biddings[currentItem.biddings.length - 1];
       if (latestBid.user.id === currentUser.id) {
@@ -113,7 +122,7 @@ const ItemDetailPage = ({
           {timeDiff === 'Bidding has done' ? (
             <div>
               <p>Bidding has been finished</p>
-              {currentItem.biddings && currentItem.biddings.length && (
+              {currentItem.biddings && currentItem.biddings.length ? (
                 <strong>
                   Winner:{' '}
                   {
@@ -121,6 +130,10 @@ const ItemDetailPage = ({
                       .username
                   }
                 </strong>
+              ) : (
+                <p>
+                  <strong>No Winner</strong>
+                </p>
               )}
               {currentUser.role === 'admin' && (
                 <div className="delete-button">
@@ -155,8 +168,11 @@ const ItemDetailPage = ({
                   <CustomButton type="button" onClick={handleBid}>
                     Submit Bit
                     <br />
-                    (Time Remaining: {timeDiff})
                   </CustomButton>
+                  <p>
+                    <strong>Time Remaining</strong>: {timeDiff}
+                  </p>
+                  <AutoBidding />
                 </div>
               )}
             </div>
@@ -181,6 +197,7 @@ const ItemDetailPage = ({
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
   currentItem: selectCurrentItem,
+  accessToken: selectAccessToken,
 });
 
 const mapDispatchToProps = (dispatch) => ({
