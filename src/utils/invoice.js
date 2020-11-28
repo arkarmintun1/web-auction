@@ -52,10 +52,4 @@ const generateInvoice = async ({ username, email, item }) => {
   return filePath.replace('../public', '');
 };
 
-// Create your invoice! Easy!
-// easyinvoice.createInvoice(data, function (result) {
-//   //The response will contain a base64 encoded PDF file
-//   console.log(result.pdf);
-// });
-
 module.exports = { generateInvoice };

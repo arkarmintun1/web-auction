@@ -16,6 +16,7 @@ import {
   finishLoadingItems,
   setCurrentPage,
 } from '../../redux/items/items.actions';
+import { selectAccessToken } from '../../redux/user/user.selector';
 import axios from '../../util/axios';
 
 import Header from '../../components/header/header.component';
@@ -32,6 +33,7 @@ const HomePage = ({
   searchQuery,
   currentPage,
   setCurrentPage,
+  accessToken,
 }) => {
   const [totalItems, setTotalItems] = useState(0);
 
@@ -40,7 +42,12 @@ const HomePage = ({
       startLoadingItems();
       const fetchItems = async () => {
         const response = await axios.get(
-          `/items?query=${searchQuery}&page=${currentPage}`
+          `/items?query=${searchQuery}&page=${currentPage}`,
+          {
+            headers: {
+              'Access-Token': accessToken,
+            },
+          }
         );
         if (response.status === 200) {
           setCurrentItems(response.data.items);
@@ -59,11 +66,17 @@ const HomePage = ({
     loadItems,
     currentPage,
     searchQuery,
+    accessToken,
   ]);
 
   const handleOnClickSortByPrice = async () => {
     const response = await axios.get(
-      `/items?query=${searchQuery}&page=${currentPage}&sort=price`
+      `/items?query=${searchQuery}&page=${currentPage}&sort=price`,
+      {
+        headers: {
+          'Access-Token': accessToken,
+        },
+      }
     );
     if (response.status === 200) {
       setCurrentItems(response.data.items);
@@ -114,6 +127,7 @@ const mapStateToProps = createStructuredSelector({
   loadItems: selectLoadingStatus,
   searchQuery: selectSearchQuery,
   currentPage: selectCurrentPage,
+  accessToken: selectAccessToken,
 });
 
 const mapDispatchToProps = (dispatch) => ({

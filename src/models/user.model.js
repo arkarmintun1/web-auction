@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mailSender = require('../utils/mail-sender');
 
 const bidSchema = new mongoose.Schema(
   {
@@ -70,6 +71,10 @@ const userSchema = new mongoose.Schema(
       type: [bidSchema],
       default: [],
     },
+    autoBidMax: {
+      type: Number,
+      default: 500,
+    },
     autoBidAmount: {
       type: Number,
       default: 500,
@@ -106,6 +111,19 @@ userSchema.statics.getAutoBidAmountByUserId = async function (userId) {
 userSchema.statics.reduceAutoBidAmountByUserId = async function (userId) {
   const user = await this.findById(userId);
   user.autoBidAmount = user.autoBidAmount - 1;
+
+  // if user reamaining bid amount is at alert level send notification
+  if (
+    user.autoBidAmount ===
+    Math.floor((user.autoBidMax * (100 - user.autoBidAlert)) / 100)
+  ) {
+    await mailSender.sendBidAlertEmail(
+      user.username,
+      user.email,
+      user.autoBidAlert
+    );
+  }
+
   await user.save();
 };
 

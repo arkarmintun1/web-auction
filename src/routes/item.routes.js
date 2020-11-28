@@ -2,11 +2,10 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 
-const Item = require('../models/item.model');
 const itemValidator = require('../validators/item.validator');
 const itemController = require('../controllers/item.controller');
 const validatorHandler = require('../middlewares/express-validator-handler');
-const { isAuthenticated } = require('../middlewares/accesscontrol');
+const { isAuthenticated, isAdmin } = require('../middlewares/accesscontrol');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,22 +26,63 @@ const upload = multer({ storage: storage });
 const router = express.Router();
 
 // Get All
-router.get('/', itemController.index);
+router.get(
+  '/',
+  itemValidator.index,
+  validatorHandler,
+  isAuthenticated,
+  itemController.index
+);
 
 // Create
-router.post('/', upload.single('image'), itemController.create);
+router.post(
+  '/',
+  upload.single('image'),
+  itemValidator.create,
+  validatorHandler,
+  isAuthenticated,
+  isAdmin,
+  itemController.create
+);
 
 // Read
-router.get('/:itemId', itemController.read);
+router.get(
+  '/:itemId',
+  itemValidator.read,
+  validatorHandler,
+  isAuthenticated,
+  itemController.read
+);
 
 // Update
-router.put('/:itemId', upload.single('image'), itemController.update);
+router.put(
+  '/:itemId',
+  upload.single('image'),
+  itemValidator.update,
+  validatorHandler,
+  isAuthenticated,
+  isAdmin,
+  itemController.update
+);
 
 // Delete
-router.delete('/:itemId', itemController.remove);
+router.delete(
+  '/:itemId',
+  itemValidator.remove,
+  validatorHandler,
+  isAuthenticated,
+  isAdmin,
+  itemController.remove
+);
 
 // add bidding
-router.post('/:itemId/biddings', itemController.bid);
+router.post(
+  '/:itemId/biddings',
+  itemValidator.bid,
+  validatorHandler,
+  isAuthenticated,
+  itemController.bid
+);
 
 // auto bidding setting on/off
 router.get(

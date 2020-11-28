@@ -6,46 +6,43 @@
 - Database - MongoDB
 - Frontend - React.js
 
-## SET UPS
+## SET-UPS
 
-The application inclues two modules (client and server). For local development, you will need to run client and server in seperate terminal windows (or run with concurrently). In production, you will build react.js code with `npm run build` and move the build folder into the server folder.
+The application includes two modules (client and server). For local developement, run `npm run dev` in the root directory which will run both express server and react. Before running this command please make sure your environment variables are setup accordingly.
 
 ### SERVER SETUP
 
 - Rename `example.env` to `.env`
-- Example data are included in `server/src/seeders/items-data.json`. You can import those data into mongodb via terminal or MongoDB Compass
-  - `cd` into `seeders` folder and run `mongoimport --db=web_auction --collection=items --file=items-array.json --jsonArray`
+- Set mail related environment variables (I've tested with SendGrid and MailTrap)
+- Example data are included in `/src/seeders/`. You can import those data into mongodb via terminal or MongoDB Compass
+  - From terminal, change directory into `seeders` folder. `cd ./src/seeders`
+  - To import `items`, use `mongoimport --db=web_auction --collection=items --jsonArray --file=items.json`
+  - To import `users`, use `mongoimport --db=web_auction --collection=users --jsonArray --file=users.json`
 
 ##### Start Server
 
-```
-cd server
-npm install
-npm run start
-```
-
-### CLIENT SETUP
-
-- Open another terminal
+- Start development server by running
 
 ```
-cd client
-npm install
-npm run start
+npm run dev
 ```
+
+### API reference
+
+API documentation used in the application can be viewed via https://documenter.getpostman.com/view/7403066/TVmJgyMf
 
 ### Final
 
-- Go to browser and open `localhost:3002`
-- You will se user name and password fileds
+- Go to browser and open `http://localhost:3000`
+- You can use following user accounts if you have imported sample data from `seeders` folder
 
   - Admin
-    - {email - `admin@gmail.com`, password - `password`}
+    - email - `admin@gmail.com`, password - `123456`
   - Users
-    - {user1 - `user1@gmail.com`, password - `password`}
-    - {user2 - `user2@gmail.com`, password - `password`}
+    - user1 - `user1@gmail.com`, password - `password`
+    - user2 - `user2@gmail.com`, password - `password`
 
-- Since authentication flow is not properly handled yet, you will lose your login state after refresh.
+- If you want to create new user, you can do via registration page
 - If you sign in with user account, you will be redirected to home `/` page
   - Home page is listed with pagination and 10 items per page
   - You can filter items by typing in the search box (eg. bag, ring, jacket, etc)
@@ -54,6 +51,8 @@ npm run start
   - All the biddings are listed below for reference
   - Sorting by Price also works
   - Countdowns are shown on each items
+  - Auto bidding can be turn on by clicking on the checkbox
+  - Real-time update of biddings are shown
 - If you sign in with admin account, you will be redirectd to dashboard `/` page
   - Dashboard include bid creation form on which you can type name, description, image, bidding end date, etc (Create)
   - You can also view the detail page (Read), update item informations (Update), and delete item (Delete)

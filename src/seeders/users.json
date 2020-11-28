@@ -1,0 +1,52 @@
+[{
+	"_id": {
+		"$oid": "5fbe2207b20fc44894b435cf"
+	},
+	"role": "admin",
+	"username": "arkar",
+	"email": "admin@gmail.com",
+	"password": "$2b$10$h1deYFuYlW08Tmg9TpZGEubbEPVaX4GDKmNBM5bXZt4DOFmk/v7j.",
+	"created": {
+		"$date": "2020-11-25T09:21:11.054Z"
+	},
+	"__v": 2,
+	"autoBidAlert": 50,
+	"autoBidAmount": 2000,
+	"autoBidMax": 2000,
+	"biddings": []
+},
+{
+	"_id": {
+		"$oid": "5fc0e7882772a54a64db639c"
+	},
+	"role": "user",
+	"autoBidAmount": 485,
+	"autoBidAlert": 90,
+	"username": "user1",
+	"email": "user1@gmail.com",
+	"password": "$2b$10$GPJfmOxkHx5c4gcWunMkFOarhQbPYWCEPMb9i/8ufcvAnJXeTIqjW",
+	"biddings": [],
+	"created": {
+		"$date": "2020-11-27T11:48:24.155Z"
+	},
+	"__v": 8,
+	"autoBidMax": 1000
+},
+{
+	"_id": {
+		"$oid": "5fc0e7892772a54a64db639d"
+	},
+	"role": "user",
+	"autoBidAmount": 1661,
+	"autoBidAlert": 90,
+	"username": "user2",
+	"email": "user2@gmail.com",
+	"password": "$2b$10$zWUvZAqlytYDj5auKi.IrOnE9FgJtebNxIt0esGKXhaeZEn7bUelS",
+	"biddings": [],
+	"created": {
+		"$date": "2020-11-27T11:48:25.34Z"
+	},
+	"__v": 6,
+	"autoBidMax": 500
+}]
+

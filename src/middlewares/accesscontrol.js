@@ -4,6 +4,10 @@ const config = require('../config');
 const httpStatus = require('../utils/http-status');
 const User = require('../models/user.model');
 
+/**
+ * Request middleware that chceck whether
+ * Access Token is included and is valid
+ */
 const isAuthenticated = async (req, res, next) => {
   try {
     const token = req.header('Access-Token');
@@ -33,4 +37,27 @@ const isAuthenticated = async (req, res, next) => {
   }
 };
 
-module.exports = { isAuthenticated };
+/**
+ * Request middleware that check whether
+ * current user is admin
+ * (chain after isAuthorized to access req.user)
+ */
+const isAdmin = async (req, res, next) => {
+  try {
+    const user = req.user;
+    if (user.role === 'admin') {
+      next();
+    } else {
+      return res
+        .status(httpStatus.ClientError.Forbidded)
+        .json({ error: 'You are not authorized to access this route' });
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(httpStatus.ClientError.BadRequest)
+      .json({ error: 'Error occurred while authenticating user' });
+  }
+};
+
+module.exports = { isAuthenticated, isAdmin };

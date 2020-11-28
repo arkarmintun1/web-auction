@@ -3,105 +3,14 @@
 		"$oid": "5faee27c54a4d7fdb32bd085"
 	},
 	"name": "Joshua Steinberg Beaumont Ceramic Collection - Bowl, Stand and Spoons Set (Ships by 1/7)",
-	"description": "Beautifully crafted with an understated yet classic design, Joshua Steinberg’s Beaumont Ceramic Collection features a range of elegant stoneware that will raise the standards of cosmopolitan living to a new level. This ceramic bowl and acacia wooden stand and spoon set reflect a contemporary aesthetic which will also prove timeless. This is going to be updated.",
+	"description": "Beautifully crafted with an understated yet classic design, Joshua Steinberg’s Beaumont Ceramic Collection features a range of elegant stoneware that will raise the standards of cosmopolitan living to a new level. This ceramic bowl and acacia wooden stand and spoon set reflect a contemporary aesthetic which will also prove timeless.",
 	"imageUrl": "/uploads/bowl-bowl-stand-1605341279065.jpg",
 	"biddingCloseAt": {
 		"$date": "2020-11-26T19:29:34Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf67787b101c1843f966e6"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T05:13:28.482Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf69ef6fb07a189b457c8f"
-			},
-			"email": "user@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T05:23:59.876Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf69f26fb07a189b457c90"
-			},
-			"email": "user@gmail.com",
-			"amount": 2,
-			"createdAt": {
-				"$date": "2020-11-14T05:24:02.755Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf69f86fb07a189b457c91"
-			},
-			"email": "user@gmail.com",
-			"amount": 3,
-			"createdAt": {
-				"$date": "2020-11-14T05:24:08.059Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf6a356fb07a189b457c92"
-			},
-			"email": "user@gmail.com",
-			"amount": 4,
-			"createdAt": {
-				"$date": "2020-11-14T05:25:09.648Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf73ac6fb07a189b457c93"
-			},
-			"email": "user@gmail.com",
-			"amount": 5,
-			"createdAt": {
-				"$date": "2020-11-14T06:05:32.113Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf747d6fb07a189b457c94"
-			},
-			"email": "user1@gmail.com",
-			"amount": 6,
-			"createdAt": {
-				"$date": "2020-11-14T06:09:01.844Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf85e8454d921f526a8c04"
-			},
-			"email": "user2@gmail.com",
-			"amount": 6,
-			"createdAt": {
-				"$date": "2020-11-14T07:23:20.456Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf9ce958a39927a2189002"
-			},
-			"email": "user1@gmail.com",
-			"amount": 12,
-			"createdAt": {
-				"$date": "2020-11-14T09:01:29.095Z"
-			}
-		}
-	],
-	"__v": 9,
-	"price": 12
+	"biddings": [],
+	"__v": 53,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -113,40 +22,8 @@
 	"biddingCloseAt": {
 		"$date": "2020-11-25T11:30:00Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf76e96fb07a189b457c97"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T06:19:21.428Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf8589454d921f526a8c02"
-			},
-			"email": "admin@gmail.com",
-			"amount": 2,
-			"createdAt": {
-				"$date": "2020-11-14T07:21:45.602Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf8605454d921f526a8c05"
-			},
-			"email": "user2@gmail.com",
-			"amount": 3,
-			"createdAt": {
-				"$date": "2020-11-14T07:23:49.42Z"
-			}
-		}
-	],
-	"__v": 3,
-	"price": 3
+	"biddings": [],
+	"__v": 3
 },
 {
 	"_id": {
@@ -158,20 +35,8 @@
 	"biddingCloseAt": {
 		"$date": "2020-11-15T11:30:00Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf77efb87c401bb091a4e3"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T06:23:43.211Z"
-			}
-		}
-	],
-	"__v": 1,
-	"price": 1
+	"biddings": [],
+	"__v": 1
 },
 {
 	"_id": {
@@ -183,20 +48,8 @@
 	"biddingCloseAt": {
 		"$date": "2020-11-29T19:53:47Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf77fbb87c401bb091a4e4"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T06:23:55.264Z"
-			}
-		}
-	],
-	"__v": 1,
-	"price": 1
+	"biddings": [],
+	"__v": 15
 },
 {
 	"_id": {
@@ -208,40 +61,8 @@
 	"biddingCloseAt": {
 		"$date": "2020-11-18T19:54:25Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf8297454d921f526a8c01"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T07:09:11.609Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf85a8454d921f526a8c03"
-			},
-			"email": "admin@gmail.com",
-			"amount": 12,
-			"createdAt": {
-				"$date": "2020-11-14T07:22:16.78Z"
-			}
-		},
-		{
-			"_id": {
-				"$oid": "5faf9cfa58a39927a2189003"
-			},
-			"email": "user1@gmail.com",
-			"amount": 15,
-			"createdAt": {
-				"$date": "2020-11-14T09:01:46.903Z"
-			}
-		}
-	],
-	"__v": 3,
-	"price": 15
+	"biddings": [],
+	"__v": 3
 },
 {
 	"_id": {
@@ -254,7 +75,8 @@
 		"$date": "2020-12-30T17:30:00Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 15,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -267,7 +89,8 @@
 		"$date": "2020-12-31T19:55:42Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 5,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -277,10 +100,11 @@
 	"description": "Crafted from soft, supple lambskin, the Aeris is a distinctively constructed cropped jacket with three pockets, an asymmetrical zip-front and quilted upper sleeves. Designed to get suppler with wear and use, the dark black of the lambskin is set against polished gunmetal hardware in the form of zips and bottom snaps. Combining feminine sophistication with traditional moto design, the Aeris is a versatile piece, perfect for transitional dressing.",
 	"imageUrl": "/uploads/women-jacket-1605297411071.jpg",
 	"biddingCloseAt": {
-		"$date": "2021-01-25T19:56:12Z"
+		"$date": "2020-11-28T07:17:00Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 2100,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -293,7 +117,8 @@
 		"$date": "2021-01-20T19:56:52Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 358,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -316,10 +141,10 @@
 	"description": "Dunhill is design driven, with style, substance and purpose; engineering unique and stylish luxuries for men. Founded in 1893 when Alfred Dunhill took over his father’s harness manufacturing business, Alfred developed and invented products for the emerging motoring industry to meet the needs of a new generation. Leather and Craftsmanship is as integral today, as it was 125 years ago. In the leather workshops in London’s Walthamstow and in Italy, Dunhill upholds the tradition of considered craft.",
 	"imageUrl": "/uploads/coat-1605297548205.jpeg",
 	"biddingCloseAt": {
-		"$date": "2020-12-01T19:58:46Z"
+		"$date": "2020-12-01T20:02:00Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 2
 },
 {
 	"_id": {
@@ -345,7 +170,7 @@
 		"$date": "2020-11-30T20:16:47Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 2
 },
 {
 	"_id": {
@@ -358,7 +183,7 @@
 		"$date": "2021-01-12T20:25:02Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 1
 },
 {
 	"_id": {
@@ -381,10 +206,10 @@
 	"description": "Hide & seek with a touch of flare! Stylish socks in tan, navy blue & gray have a lace detailing leaving some skin to show behind!",
 	"imageUrl": "/uploads/socks-1605299166939.jpg",
 	"biddingCloseAt": {
-		"$date": "2021-01-16T20:25:46Z"
+		"$date": "2021-01-16T20:22:00Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 2
 },
 {
 	"_id": {
@@ -397,7 +222,7 @@
 		"$date": "2021-03-17T20:26:08Z"
 	},
 	"biddings": [],
-	"__v": 0
+	"__v": 12
 },
 {
 	"_id": {
@@ -409,20 +234,9 @@
 	"biddingCloseAt": {
 		"$date": "2020-12-17T20:26:30Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf74926fb07a189b457c95"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T06:09:22.024Z"
-			}
-		}
-	],
-	"__v": 1,
-	"price": 1
+	"biddings": [],
+	"__v": 2,
+	"autoBidders": []
 },
 {
 	"_id": {
@@ -434,20 +248,8 @@
 	"biddingCloseAt": {
 		"$date": "2020-11-14T05:30:00Z"
 	},
-	"biddings": [
-		{
-			"_id": {
-				"$oid": "5faf759f6fb07a189b457c96"
-			},
-			"email": "user1@gmail.com",
-			"amount": 1,
-			"createdAt": {
-				"$date": "2020-11-14T06:13:51.278Z"
-			}
-		}
-	],
-	"__v": 1,
-	"price": 1
+	"biddings": [],
+	"__v": 1
 },
 {
 	"_id": {
@@ -461,5 +263,49 @@
 	},
 	"biddings": [],
 	"__v": 0
+},
+{
+	"_id": {
+		"$oid": "5fbf4b442737f12f3c378868"
+	},
+	"name": "2012 Two Door Red Fiat 500L",
+	"description": "Maker; Fiat. Color; red. Year; 2012. Model;  500L. Approximately 45,000 miles. Single  owner, no accidents and always garaged.  Buyer's premium on this lot is 10% by phone  or absentee bid with cash / check via the gallery at 203 355 9335 and 15% for all  online bidding venues with cash / check.  Credit card fees can be added.",
+	"imageUrl": "/uploads/93635311_1_x-1606372164868.jpg",
+	"biddingCloseAt": {
+		"$date": "2020-11-27T06:29:11Z"
+	},
+	"biddings": [],
+	"__v": 2
+},
+{
+	"_id": {
+		"$oid": "5fc0c2ef1274db48480a91ba"
+	},
+	"name": "PELÉ AND MARADONA SIGNED JERSEYS DISPLAY",
+	"description": "A framed display featuring jerseys signed by famous World Cup winners  Framed, 59 by 35 inches",
+	"imageUrl": "/uploads/93391455_1_x-1606468335321.jpg",
+	"biddingCloseAt": {
+		"$date": "2020-11-27T09:15:00Z"
+	},
+	"biddings": [],
+	"__v": 3
+},
+{
+	"_id": {
+		"$oid": "5fc1fbe1bebe501d849c84d5"
+	},
+	"autoBidders": [
+		{
+			"$oid": "5fc0e7882772a54a64db639c"
+		}
+	],
+	"name": "A FAMILLE ROSE ‘BUTTERFLY’ VASE",
+	"description": "A FAMILLE ROSE ‘BUTTERFLY’ VASE GUANGXU SIX-CHARACTER MARK IN IRON RED AND OF THE PERIOD (1875-1908) Decorated overall with a multitude of butterflies separated by a gilt-bordered band of lotus sprays and gilt xi characters on the shoulder. 15 1/2 in. (39.4 cm.) high",
+	"imageUrl": "/uploads/93521662_1_x-1606548449791.jpg",
+	"biddingCloseAt": {
+		"$date": "2020-11-28T07:29:00Z"
+	},
+	"biddings": [],
+	"__v": 224
 }]
 

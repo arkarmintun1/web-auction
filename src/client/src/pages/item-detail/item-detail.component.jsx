@@ -50,7 +50,11 @@ const ItemDetailPage = ({
 
   useEffect(() => {
     const fetchItem = async () => {
-      const response = await axios.get(`/items/${itemId}`);
+      const response = await axios.get(`/items/${itemId}`, {
+        headers: {
+          'Access-Token': accessToken,
+        },
+      });
       if (response.status === 200) {
         setCurrentItem(response.data);
       } else {
@@ -58,7 +62,7 @@ const ItemDetailPage = ({
       }
     };
     fetchItem();
-  }, [itemId, setCurrentItem]);
+  }, [itemId, setCurrentItem, accessToken]);
 
   const handleBid = async () => {
     if (!biddingAmount || biddingAmount === '') {
@@ -76,10 +80,18 @@ const ItemDetailPage = ({
       }
     }
     try {
-      const response = await axios.post(`/items/${itemId}/biddings`, {
-        userId: currentUser.id,
-        amount: biddingAmount,
-      });
+      const response = await axios.post(
+        `/items/${itemId}/biddings`,
+        {
+          userId: currentUser.id,
+          amount: biddingAmount,
+        },
+        {
+          headers: {
+            'Access-Token': accessToken,
+          },
+        }
+      );
       if (response.status === 200) {
         setCurrentItem(response.data);
         alert('Bidding has been placed successfully');

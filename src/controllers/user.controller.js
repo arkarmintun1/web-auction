@@ -40,6 +40,7 @@ const updateAutoBidSettings = async (req, res) => {
     }
 
     const { autoBidAmount, autoBidAlert } = req.body;
+    user.autoBidMax = autoBidAmount;
     user.autoBidAmount = autoBidAmount;
     user.autoBidAlert = autoBidAlert;
     await user.save();

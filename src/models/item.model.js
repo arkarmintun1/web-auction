@@ -55,13 +55,18 @@ const itemSchema = mongoose.Schema({
     type: [bidSchema],
     default: [],
   },
-  autoBidders: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: 'User',
-  },
+  autoBidders: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
-itemSchema.statics.getHighestBidder = async function (itemId) {
+// Select latest bidding because incoming biddings are
+// pushed into array (latest = highest)
+// Already checked to accept only higher bidding on frontend
+itemSchema.statics.getHighestBidding = async function (itemId) {
   const finalItem = await this.findById(itemId).populate({
     path: 'biddings.userId',
     select: '-biddings',
@@ -69,9 +74,27 @@ itemSchema.statics.getHighestBidder = async function (itemId) {
   return finalItem.biddings[finalItem.biddings.length - 1];
 };
 
-itemSchema.post('save', function () {
-  console.log('Item has been saved');
-});
+// Item Detail page need to get Item populated with username and email
+// So, bidding interactions require populated query for return purpose
+itemSchema.statics.findByIdAndPopulateBiddings = async function (itemId) {
+  const item = await this.findById(itemId).populate({
+    path: 'biddings.userId',
+    select: 'username email',
+  });
+  return item;
+};
+
+itemSchema.statics.findByIdAndPopulateBiddingsAutoBidders = async function (
+  itemId
+) {
+  const item = await this.findById(itemId)
+    .populate({
+      path: 'biddings.userId',
+      select: 'username email',
+    })
+    .populate({ path: 'autoBidders', select: 'username email' });
+  return item;
+};
 
 itemSchema.index({ name: 'text', description: 'text' });
 

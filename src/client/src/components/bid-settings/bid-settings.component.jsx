@@ -79,7 +79,7 @@ const BidSettings = ({ currentUser, accessToken, setCurrentUser }) => {
         <div className="current-settings">
           <h4>Current Settings</h4>
           <p>Auto Bid Amount: {currentUser.autoBidAmount}</p>
-          <p>Auto Bid Alert: {currentUser.autoBidAlert}</p>
+          <p>Auto Bid Alert: {currentUser.autoBidAlert} %</p>
         </div>
         <div className="update-settings">
           <h4>Update Settings</h4>
